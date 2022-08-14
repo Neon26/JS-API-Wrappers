@@ -12,89 +12,19 @@
 import { apiClientBasicAuth } from "./user";
 
 
-const endpoint = '/api/login';
+const endpoint = '/login';
 
-const getUser = async (email, password, CancelToken) => {
+export const loginUser = async (email, password, canceToken) => {
     let error;
     let user;
 
-    const response = await apiClientBasicAuth(email, password, CancelToken).get(endpoint);
+    const response = await apiClientBasicAuth(email, password, canceToken).get(endpoint);
     if (response.ok) {
         user = response.data;
-    } else if ( response.status === 401 ) {
-        error = 'Invalid email or password';
+    } else if (response.problem) {
+        error = response.problem;
     } else {
-        error = 'Something went wrong';
-    }
+        error = response.error;
+    }   
     return { user, error };
 }
-
-const getLogin = async (email, password, CancelToken) => {
-    let error;
-    let user;
-
-    const response = await apiClientBasicAuth(email, password, CancelToken).get(endpoint);
-    if (response.ok) {
-        user = response.data;
-    } else if ( response.status === 401 ) {
-        error = 'Invalid email or password';
-    } else {
-        error = 'Something went wrong';
-    }
-    return { user, error };
-}
-
-const postUser = async (email, password, CancelToken) => {
-    let error;
-    let user;
-
-    const response = await apiClientBasicAuth(email, password, CancelToken).post(endpoint, { email, password });
-    if (response.ok) {
-        user = response.data;
-    } else if ( response.status === 401 ) {
-        error = 'Invalid email or password';
-    } else {
-        error = 'Something went wrong';
-    }
-    return { user, error };
-}
-
-const putUser = async (token, email, password, CancelToken) => {
-    let error;
-    let user;
-
-    const response = await apiClientBasicAuth(email, password, CancelToken).put(endpoint, { email, password });
-    if (response.ok) {
-        user = response.data;
-    } else if ( response.status === 401 ) {
-        error = 'Invalid email or password';
-    } else {
-        error = 'Something went wrong';
-    }
-    return { user, error };
-}
-
-const deleteUser = async (token, CancelToken) => {
-    let error;
-    let user;
-
-    const response = await apiClientBasicAuth(token, CancelToken).delete(endpoint);
-    if (response.ok) {
-        user = response.data;
-    } else if ( response.status === 401 ) {
-        error = 'Invalid email or password';
-    } else {
-        error = 'Something went wrong';
-    }
-    return { user, error };
-}
-
-const apiBasicAuth = {
-    getUser,
-    getLogin,
-    postUser,
-    putUser,
-    deleteUser
-}
-
-export default apiBasicAuth;

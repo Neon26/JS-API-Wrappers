@@ -1,24 +1,24 @@
 import base64 from 'base-64';
-import {CancelToken, create} from 'apisauce';
+import {create} from 'apisauce';
 
-const base ="http://localhost:5000";
+const base ="https://cae-bootstore.herokuapp.com/";
 
-export const apiClientNoAuth = (CancelToken) => create({
+export const apiNoAuth = (CancelToken) => create({
     baseURL: base,
     CancelToken: CancelToken,
 })
 
-export const apiClientBasicAuth = (email, password,CancelToken) => create({
+export const apiBasicAuth = (email, password,cancelToken) => create({
     baseURL: base,
-    CancelToken: CancelToken,
+    cancelToken: cancelToken,
     headers: {
         Authorization: 'Basic ' + base64.encode(email + ':' + password)
     }
 })
 
-export const apiClientTokenAuth = (token,CancelToken) => create({
+export const apiTokenAuth = (token,cancelToken) => create({
     baseURL: base,
-    CancelToken: CancelToken,
+    cancelToken: cancelToken,
     headers: {
         Authorization: 'Bearer ' + token
     }

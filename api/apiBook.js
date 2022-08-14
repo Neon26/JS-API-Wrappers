@@ -1,4 +1,4 @@
-import { apiClientNoAuth, apiClientTokenAuth } from "./user";
+import { apiNoAuth, apiTokenAuth } from "./user";
 
 const endpoint = "/api/book";
 
@@ -6,7 +6,7 @@ const endpoint = "/api/book";
     let error;
     let books;
 
-    const response = await apiClientNoAuth(CancelToken).get(endpoint);
+    const response = await apiNoAuth(CancelToken).get(endpoint);
     if (response.ok) {
         books = response.data;
     } else {
@@ -19,7 +19,7 @@ const post = async (token, book, CancelToken) => {
     let error;
     let book;
 
-    const response = await apiClientTokenAuth(token, CancelToken).post(endpoint, book);
+    const response = await apiTokenAuth(token, CancelToken).post(endpoint, book);
     if (response.ok) {
         book = response.data;
     } else {
@@ -32,7 +32,7 @@ const put = async (token, id, book, CancelToken) => {
     let error;
     let book;
 
-    const response = await apiClientTokenAuth(token, CancelToken).put(endpoint + "/" + id, book);
+    const response = await apiTokenAuth(token, CancelToken).put(endpoint + "/" + id, book);
     if (response.ok) {
         book = response.data;
     } else {
